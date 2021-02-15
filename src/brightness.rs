@@ -3,8 +3,8 @@
 /// Struct that holds display brightness
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct Brightness {
-    pub(crate) precharge: u8,
-    pub(crate) contrast: u8,
+    pub precharge: u8,
+    pub contrast: u8,
 }
 
 impl Default for Brightness {
@@ -39,7 +39,7 @@ impl Brightness {
     ///
     /// `contrast` sets the value used in the `0x81 Set Contrast Control` command and must be
     /// between 0 and 255. See section 10.1.7 of the SSD1306 datasheet for more information.
-    const fn custom(precharge: u8, contrast: u8) -> Self {
+    pub const fn custom(precharge: u8, contrast: u8) -> Self {
         Self {
             precharge,
             contrast,
