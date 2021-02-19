@@ -232,10 +232,18 @@ where
     /// Change the display brightness.
     pub fn set_brightness(&mut self, brightness: Brightness) -> Result<(), DisplayError> {
         // Should be moved to Brightness::new once conditions can be used in const functions
-        debug_assert!(
-            0 < brightness.precharge && brightness.precharge <= 15,
-            "Precharge value must be between 1 and 15"
-        );
+        if cfg!(debug_assertions) {
+            let precharge_phase_1 = brightness.precharge & 0x0F;
+            let precharge_phase_2 = brightness.precharge & 0xF0 >> 4;
+            debug_assert!(
+                0 < precharge_phase_1 && precharge_phase_1 <= 15,
+                "Precharge value (phase 1) must be between 1 and 15"
+            );
+            debug_assert!(
+                0 < precharge_phase_2 && precharge_phase_2 <= 15,
+                "Precharge value (phase 2) must be between 1 and 15"
+            );
+        }
 
         Command::PreChargePeriod(1, brightness.precharge).send(&mut self.iface)?;
         Command::Contrast(brightness.contrast).send(&mut self.iface)
