@@ -3,8 +3,8 @@
 /// Struct that holds display brightness
 #[derive(Copy, Clone, PartialEq, Eq)]
 pub struct Brightness {
-    pub precharge: u8,
-    pub contrast: u8,
+    pub(crate) precharge: u8,
+    pub(crate) contrast: u8,
 }
 
 impl Default for Brightness {
@@ -15,19 +15,19 @@ impl Default for Brightness {
 
 impl Brightness {
     /// The dimmest predefined brightness level
-    pub const DIMMEST: Brightness = Brightness::custom(0x1, 0x00);
+    pub const DIMMEST: Brightness = Brightness::custom(0xF1, 0x00);
 
     /// A dim predefined brightness level
-    pub const DIM: Brightness = Brightness::custom(0x2, 0x2F);
+    pub const DIM: Brightness = Brightness::custom(0xF2, 0x2F);
 
     /// A medium predefined brightness level
-    pub const NORMAL: Brightness = Brightness::custom(0x2, 0x5F);
+    pub const NORMAL: Brightness = Brightness::custom(0xF2, 0x5F);
 
     /// A bright predefined brightness level
-    pub const BRIGHT: Brightness = Brightness::custom(0x2, 0x9F);
+    pub const BRIGHT: Brightness = Brightness::custom(0xF2, 0x9F);
 
     /// The brightest predefined brightness level
-    pub const BRIGHTEST: Brightness = Brightness::custom(0x2, 0xFF);
+    pub const BRIGHTEST: Brightness = Brightness::custom(0xF2, 0xFF);
 
     /// Create a Brightness object from a precharge period and contrast pair.
     ///
